@@ -1,0 +1,6 @@
+{
+  "name": "Conv2mp4-py",
+  "tagline": "Python script for automatic converts",
+  "body": "### conv2mp4-py\r\nPython 2.7 script that recursively searches through a defined file path and converts MKV, AVI, FLV, and MPEG files to MP4 using handbrake (with AAC audio). It then refreshes a Plex library, and deletes the source file upon success and moves the new files into the defines directory (Plex Library directories for example). Fails over to ffmpeg encode if conversion failure is detected. The purpose of this script is to reduce the number of transcodes performed by a Plex server, by processing all files into an MP4 format.\r\n\r\n### Designer Templates\r\nDependencies\r\nThis script requires Python, Filebot, ffmpeg and Handbrake to be installed on your computer. You can download them from here:\r\n<a href=\"https://www.python.org/downloads/\">Python</a><br>\r\n<a href=\"https://www.filebot.net/#download\">FileBot</a><br>\r\n<a href=\"https://ffmpeg.org/download.html\">ffmpeg</a><br>\r\n<a href=\"https://handbrake.fr/downloads.php\">Handbrake</a><br><br>\r\n\r\n### Authors and Contributors\r\n@KameeCoding\r\n\r\n### Support or Contact\r\nHaving trouble with the script? Check out the F.A.Q. or email me at \r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
