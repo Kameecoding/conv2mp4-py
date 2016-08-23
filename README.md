@@ -6,14 +6,11 @@ This script requires Python, Filebot, ffmpeg and Handbrake to be installed on yo
 <a href="https://www.filebot.net/#download">FileBot</a><br>
 <a href="https://ffmpeg.org/download.html">ffmpeg</a><br>
 <a href="https://handbrake.fr/downloads.php">Handbrake</a><br><br>
-
 <b>Usage</b><br>
 You need to launch either with the bundled launcher script or manually from a commandline:
   There is only one argument: the path to the media files<br><br>
-
 <b>User-defined variables</b><br>
 There are several user-defined variables you will need to edit using notepad or a program like <a href="https://notepad-plus-plus.org/download/v6.9.2.html">Notepad++</a>.<br><br>
-
 <i>NOTE: to use a mapped drive, you must run <code>net use z: \\server\share /persistent:yes</code> as the user you're going to run the script as (generally Administrator) prior to running the script.</i><br>
 <b>$fileTypes</b> = the extensions of the files you want to convert in the format ".ex1", ".ex2".<br>
 <b>$log</b> = path and filename you want the log file to save to. Defaults to your desktop.<br>
@@ -31,7 +28,6 @@ There are several user-defined variables you will need to edit using notepad or 
 <b>TVSHOW_TARGET</b> = Path where you want your TV SHows<br>
 <b>LANG_MOVIE_TARGET</b> = Path where you want your foreign language movies<br>
 <b>LANG_TVSHOW_TARGET</b> = Path where you want your foreign langue Tv Shows<br>
-
 
 <b>FOREIGN</b> = Set to true if you want the script to take foreign language into account<br>
 <b>PREFER_METADATA</b> = The Script tries to match the description and the metadata of the subtitles in the file, you can try turning it on and off to see if the subtitles were matched better<br>
