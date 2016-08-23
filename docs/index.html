@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Conv2mp4-py by Kameecoding</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Conv2mp4-py</h1>
+      <h2 class="project-tagline">Python script for automatic converts</h2>
+      <a href="https://github.com/Kameecoding/conv2mp4-py" class="btn">View on GitHub</a>
+      <a href="https://github.com/Kameecoding/conv2mp4-py/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Kameecoding/conv2mp4-py/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="conv2mp4-py" class="anchor" href="#conv2mp4-py" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>conv2mp4-py</h3>
+
+<p>Python 2.7 script that recursively searches through a defined file path and converts MKV, AVI, FLV, and MPEG files to MP4 using handbrake (with AAC audio). It then refreshes a Plex library, and deletes the source file upon success and moves the new files into the defines directory (Plex Library directories for example). Fails over to ffmpeg encode if conversion failure is detected. The purpose of this script is to reduce the number of transcodes performed by a Plex server, by processing all files into an MP4 format.</p>
+
+<h3>
+<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Designer Templates</h3>
+
+<p>Dependencies
+This script requires Python, Filebot, ffmpeg and Handbrake to be installed on your computer. You can download them from here:
+<a href="https://www.python.org/downloads/">Python</a><br>
+<a href="https://www.filebot.net/#download">FileBot</a><br>
+<a href="https://ffmpeg.org/download.html">ffmpeg</a><br>
+<a href="https://handbrake.fr/downloads.php">Handbrake</a><br><br></p>
+
+<h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+
+<p><a href="https://github.com/KameeCoding" class="user-mention">@KameeCoding</a></p>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble with the script? Check out the Readme, F.A.Q. or email me at </p>
+
+<h3>
+<a id="faq" class="anchor" href="#faq" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>F.A.Q.</h3>
+
+<p><strong>How do I launch the script</strong><br>
+The script takes exactly one launch parameter, the directory where the files are located. For me it's 'F:\Temp'<br></p>
+
+<p><strong>What does foreign language mean in readme?</strong><br>
+In this case I call foreign language every language that is not English. (Even though English is foreign for me)<br></p>
+
+<p><strong>Options are confusing how can I get my files placed here and there?</strong><br></p>
+
+<p>Say for example you have a folder with all you media files: <br>
+'F:\Temp'
+You launch the Script with this parameter.</p>
+
+<p><br>
+<strong>You want to keep the files where they are, you just want to convert them:</strong></p>
+
+<ul>
+<li>Set <code>MOVE_FILES</code> to False</li>
+</ul>
+
+<p><br>
+<strong>You want to move files to your Plex Libraries and you have on TV Show and one Movies Library</strong></p>
+
+<ul>
+<li>Set <code>MOVE_FILES</code> to True</li>
+<li>Set <code>FOREIGN</code> to False</li>
+</ul>
+
+<p><br>
+<strong>You want to move your TV Shows to your Plex Libraries and also create a separate folder for each TV Show</strong></p>
+
+<ul>
+<li>Set <code>MOVE_FILES</code> to True</li>
+<li>Set <code>FOREIGN</code> to False</li>
+<li>Set <code>CREATE_TVSHOW_DIRS</code> to True</li>
+<li>Set <code>TVSHOW_TARGET</code> to the path where you want to move the = '' #Example F:\Media\TV Shows'</li>
+</ul>
+
+<p>If you have all the Seasons of How I met your mother it will move your files to [Plex TVSHOW Library]\How I Met Your Mother\SeasonXXEpisodeXX.mp4 </p>
+
+<ul>
+<li>You can also enable creating Season folders by setting <code>CREATE_SEASON_DIRS</code> to True.
+The path will be [Plex TVSHOW Library]\How I Met Your Mother\Season XX\EpisodeXX.mp4 </li>
+</ul>
+
+<p><br>
+<strong>You want to move your Movie files to your Plex Libraries and also create a separate folder for each Movie file.</strong></p>
+
+<ul>
+<li>Set <code>MOVE_FILES</code> to True</li>
+<li>Set <code>FOREIGN</code> to False</li>
+<li>Set <code>CREATE_MOVIE_DIRS</code> to True</li>
+<li>Set <code>MOVIE_TARGET</code> to the path where you want to move the movie files #Example: "F:\Media\Movies"</li>
+</ul>
+
+<p>If you have the Pacific Rim movie this will move it to [Plex Movie Library]\Pacific Rim\Pacific Rim.mp4
+(Note that the script merely cut's of the file extension of the file to create a directory so if your file is named pacific_rim_2013.mp4 the folder will be called pacific_rim_2013)</p>
+
+<p><br>
+<strong>You have separate libraries for Tv Shows and Movies in your own and english language and you want the script to put the files where they belong</strong></p>
+
+<ul>
+<li>Set <code>MOVE_FILES</code> to True</li>
+<li>Set <code>FOREIGN</code> to True</li>
+<li>Set up <code>LANG_MOVIE_TARGET</code> and <code>LANG_TVSHOW_TARGET</code> to point to your PLEX libraries in your language.</li>
+</ul>
+
+<p><br>
+<strong>Same as previous but you want to have files with multiple audio stream in both your english and your own language libraries.</strong></p>
+
+<ul>
+<li>Set <code>HARD_LINK</code> to true.</li>
+<li>Set <code>CREATE_MOVIE_DIRS</code> to true.</li>
+<li>Set <code>CREATE_TVSHOW_DIRS</code> to true.</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Kameecoding/conv2mp4-py">Conv2mp4-py</a> is maintained by <a href="https://github.com/Kameecoding">Kameecoding</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
