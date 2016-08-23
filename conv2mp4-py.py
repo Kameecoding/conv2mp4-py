@@ -547,7 +547,7 @@ class MediaFile:
     def append_folder(self):
 
         if (CREATE_TVSHOW_DIRS and self.is_show):
-            sub_folder=os.path.basename(self.input_video)[:new_file.find('-')-1]
+            sub_folder=os.path.basename(self.input_video)[:os.path.basename(self.input_video).find('-')-1]
             if CREATE_SEASON_DIRS: 
                 match = re.search(TV_SHOW_PATTERNS[0],self.input_video,re.I)
                 if match:
