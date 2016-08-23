@@ -39,8 +39,8 @@ There are several user-defined variables you will need to edit using notepad or 
 
 <b>MOVE_FILES</b> = Whether to allow to move the files to new directories or keep them in the same<br>
 <b>CREATE_MOVIE_DIRS</b> = Whether to create a directory for each movie file: e.g. it will put the movie Pacific Rim and all it's subtitles to the folder [MOVIE_TARGET or LANG_MOVIE_TARGET]\Pacific Rim (2013)\ <br>
-<b>CREATE_TVSHOW_DIRS</b> = Whether to create a directory for each TV Show: e.g. it will put the tv show Modern Family and all it's episodes and subtitles to the folder [TVSHOW_TARGET or LANG_TVSHOW_TARGET]\Modern Family\<br>
-<b>CREATE_SEASON_DIRS</b> = Used together with CREATE_TVSHOW_DIRS, also adds a Season folder. e.g. first Season of Modern Family will get put into: [TVSHOW_TARGET or LANG_TVSHOW_TARGET]\Modern Family\Season 01\<br>
+<b>CREATE_TVSHOW_DIRS</b> = Whether to create a directory for each TV Show: e.g. it will put the tv show Modern Family and all it's episodes and subtitles to the folder [TVSHOW_TARGET or LANG_TVSHOW_TARGET]\Modern Family\ <br>
+<b>CREATE_SEASON_DIRS</b> = Used together with CREATE_TVSHOW_DIRS, also adds a Season folder. e.g. first Season of Modern Family will get put into: [TVSHOW_TARGET or LANG_TVSHOW_TARGET]\Modern Family\Season 01\ <br>
 <i>NOTE: Only Works with CREATE_TVSHOW_DIRS set to True</i><br>
 <b>REMOVE_OLD</b> = Whether to remove the files that have been already converted and are no longer needed<br>
 <b>HARD_LINK</b> = Whether to create hardlink between folders, for example if you have a movie with both English and Foreign audio and you want plex to detect it in both the English and Foreign Library the easiest way is to Hard link the directories<br>
