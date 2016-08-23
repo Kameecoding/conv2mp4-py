@@ -110,7 +110,7 @@ TVSHOW_TARGET = '' #Example F:\Media\TV Shows'
 LANG_TVSHOW_TARGET = '' #Example "F:\Media\Sorozatok"
 
 #Pattern Constants - DO NOT EDIT THESE
-TV_SHOW_PATTERNS = [".s([0-9]+).",".([0-9]+)x[0-9][0-9]."]
+TV_SHOW_PATTERNS = [".s([0-9]+).",".([0-9]+)x[0-9][0-9].",".s([0-9]+)e([0-9]+)."]
 SUB_PATTERN = 'Stream #[0-9]:([0-9])\(([a-z]{3})\): Subtitle: [a-z]{3,7}[ ]*[\(]*([a-z]*)[\) \(]*([a-z]*)[\)\W]*Metadata:[\W]*title[ ]*: ([a-z]*)'
 SUB_PATTERN2 = 'Stream #[0-9]:([0-9])\(([a-z]{3})\): Subtitle: [a-z]{3,7}[ ]*[\(]*([a-z]*)[\) \(]*([a-z]*)[\)\W]*'
 AUDIO_PATTERN = 'Stream #[0-9]:[0-9]\(([a-z]{3})\):[\W]*Audio'
@@ -158,7 +158,7 @@ def rename_files(media_path):
         
     for file in file_list:
         #skip already renamed files
-        if re.search('.[a-z\W]+[0-9]+x[0-9]{2} - [a-z\W]+.',os.path.basename(file),re.I):
+        if re.search('.s([0-9]+)e([0-9]+).',os.path.basename(file),re.I):
             continue
 
         the_db = 'TheMovieDB'
@@ -181,6 +181,7 @@ def rename_files(media_path):
         proc = subprocess.Popen([
             FILEBOT,
             '-rename', file,
+            '--format','{n} - {s00e00} - {t}',
             '--db', the_db,
             '-non-strict'
         ],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
@@ -552,7 +553,7 @@ class MediaFile:
                 if match:
                     season = match.group(1)
                 else:
-                    match = re.search(TV_SHOW_PATTERNS[1],self.input_video,re.I)
+                    match = re.search(TV_SHOW_PATTERNS[2],self.input_video,re.I)
                     if match:
                         season = match.group(1)
                     if 'season' in locals():
