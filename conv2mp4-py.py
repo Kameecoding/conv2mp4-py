@@ -191,20 +191,23 @@ def rename_files(media_path):
         if output.find('already exists') != -1:
             Logger.warning("{filename} wasn't renamed because a file with same name already exists".format(filename=file))
             continue
-        match = re.search('\[MOVE\] Rename \[(.*?)\] to \[(.*?)\]',output,re.I | re.M)
         
-        output_file = match.group(2)
-        rename_output = output_file
-        output_file_extention = output_file[-3:]
-        output_file = output_file[:-3]
+        try:
+            match = re.search('\[MOVE\] Rename \[(.*?)\] to \[(.*?)\]',output,re.I | re.M)
+            output_file = match.group(2)
+            rename_output = output_file
+            output_file_extention = output_file[-3:]
+            output_file = output_file[:-3]
 
-        if 'suffix' in locals() and is_good_suffix:
-            output_file += suffix + '.'
-        if 'forced' in locals():
-            output_file += forced + '.'
-        output_file += output_file_extention
-        if rename_output != output_file:
-            shutil.move(rename_output,output_file)
+            if 'suffix' in locals() and is_good_suffix:
+                output_file += suffix + '.'
+            if 'forced' in locals():
+                output_file += forced + '.'
+            output_file += output_file_extention
+            if rename_output != output_file:
+                shutil.move(rename_output,output_file)
+        except AttributeError:
+            Logger.warning("Unable to match output file name for {filename}".format(filename=file))
         Logger.info("{filename} renamed".format(filename=file))
 
 def is_tvshow(filename):
