@@ -160,6 +160,8 @@ def rename_files(media_path):
         #skip already renamed files
         if re.search('.- s([0-9]+)e([0-9]+) -.',os.path.basename(file),re.I):
             continue
+        if re.search('.\(([0-9]{4})\).',os.path.basename(file),re.I):
+            continue
 
         the_db = 'TheMovieDB'
         #if it looks like a TV Show change lookup
@@ -181,7 +183,7 @@ def rename_files(media_path):
         proc = subprocess.Popen([
             FILEBOT,
             '-rename', file,
-            '--format','{Plex}',
+            '--format','{plex}',
             '--db', the_db,
             '-non-strict'
         ],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
