@@ -164,9 +164,11 @@ def rename_files(media_path):
             continue
 
         the_db = 'TheMovieDB'
+        form = '{n} ({y})'
         #if it looks like a TV Show change lookup
         if is_tvshow(file):
             the_db = 'TheTVDB'
+            form = '{n} - {s00e00} - {t}'
         
         suffix_match = re.search('\.([a-z]{3})\.',os.path.basename(file),re.I)
         forced_match = re.search('.(forced).',file,re.I)
@@ -178,15 +180,19 @@ def rename_files(media_path):
 
         if forced_match:
             forced = forced_match.group(1)
-        
-        #rename the files       
-        proc = subprocess.Popen([
-            FILEBOT,
-            '-rename', file,
-            '--format','{plex}',
-            '--db', the_db,
-            '-non-strict'
-        ],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        try:
+            #rename the files       
+            proc = subprocess.Popen([
+                FILEBOT,
+                '-rename', file,
+                '--format',form,
+                '--db', the_db,
+                '-non-strict'
+            ],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        except OSError as e:
+            if e.errno == os.errno.ENOENT:
+                Logger.error("Filebot not found, install on your system to use this script")
+                sys.exit(0)
 
         output = proc.stdout.read()
         
