@@ -203,7 +203,8 @@ def rename_files(media_path):
         if 'forced' in locals():
             output_file += forced + '.'
         output_file += output_file_extention
-        shutil.move(rename_output,output_file)
+        if rename_output != output_file:
+            shutil.move(rename_output,output_file)
         Logger.info("{filename} renamed".format(filename=file))
 
 def is_tvshow(filename):
