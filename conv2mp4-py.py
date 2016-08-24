@@ -538,11 +538,16 @@ class MediaFile:
     Get Audio streams from the file
     ----------------------------------------------------------------------------------"""
     def get_audio_streams(self):
-        #Get file info and Parse it     
-        proc =subprocess.Popen([
-            FFMPEG,
-            '-i', self.input_video,
-        ],stdout=None,stderr=subprocess.PIPE)
+        #Get file info and Parse it  
+        try:
+            proc =subprocess.Popen([
+                FFMPEG,
+                '-i', self.input_video,
+            ],stdout=None,stderr=subprocess.PIPE)
+        except OSError as e:
+            if e.errno == os.errno.ENOENT:
+                Logger.error("FFMPEG not found, install on your system to use this script")
+                sys.exit(0)
         output = proc.stderr.read()
         return re.findall(AUDIO_PATTERN,output,re.I | re.M)
 
@@ -668,7 +673,7 @@ class MediaFile:
 
         except OSError as e:
             if e.errno == os.errno.ENOENT:
-                Logger.warning("FFMPEG not found, install on your system to use this script")
+                Logger.error("FFMPEG not found, install on your system to use this script")
                 sys.exit(0)
             else:
                 Logger.info("FFMPEG - converting successful: %s", os.path.basename(self.input_video))
@@ -678,12 +683,17 @@ class MediaFile:
     ----------------------------------------------------------------------------------"""
     def extract_srt(self):
         
-        #Get file info and Parse it     
-        proc =subprocess.Popen([
-            FFMPEG,
-            '-i', self.input_video,
-        ],stdout=None,stderr=subprocess.PIPE)
-        output = proc.stderr.read()
+        #Get file info and Parse it
+        try:
+            proc =subprocess.Popen([
+                FFMPEG,
+                '-i', self.input_video,
+            ],stdout=None,stderr=subprocess.PIPE)
+            output = proc.stderr.read()
+        except OSError as e:
+            if e.errno == os.errno.ENOENT:
+                Logger.error("FFMPEG not found, install on your system to use this script")
+                sys.exit(0)
 
         #Try to match subtitles
         matches1 = re.findall(SUB_PATTERN,output,re.I | re.M)
