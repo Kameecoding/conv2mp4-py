@@ -24,8 +24,6 @@ There are several user-defined variables you will need to edit using notepad or 
 <b>PLEX_TOKEN</b> = your Plex server's token (for the purpose of refreshing its library).<br>
 <i>NOTE: See https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token for instructions on retrieving your Plex server's token. Your Plex server's token is also easy to retrieve with Couchpotato or SickRage.</i><br>
 
-<b>RENAME_FILES</b> = Whether to rename files using FILEBOT<br>
-<i>NOTE: Files are Renamed before the files are converted</i><br>
 <b>MAX_CONVERT_ITEMS</b> = Maximum number of files to convert in one go<br>
 <b>LOCALE</b> = Three digit code for your language for example for Hungarian it's 'hun' <br>
 
