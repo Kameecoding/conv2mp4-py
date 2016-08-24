@@ -604,8 +604,8 @@ class MediaFile:
             '--h264-level', '4.0',  
             ], stdout=None,stderr=subprocess.PIPE)
             output = proc.stderr.read()
-            while "encoding" in output:
-                print output
+            
+            print output
             
             if output.find("Encode done!") == -1:
                 self.error = 1
