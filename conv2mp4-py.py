@@ -735,15 +735,17 @@ class MediaFile:
     def move_external_subs(self):
         for sub in self.external_subtitles:
             new_sub = os.path.join(self.target_dir,os.path.basename(sub))
-            shutil.move(sub,new_sub)
-            Logger.info("Subtitle: {old}\n moved to {new}".format(old=sub,new=new_sub))
+            if sub != new_sub:    
+                shutil.move(sub,new_sub)
+                Logger.info("Subtitle: {old}\n moved to {new}".format(old=sub,new=new_sub))
 
     """----------------------------------------------------------------------------------
     Remove files quietly if they don't exist
     ----------------------------------------------------------------------------------"""
     def remove_media_file(self,file):
         try:
-            os.remove(file)
+            if self.input_video != self.output_video:
+                os.remove(file)
         except OSError as e:
             if e.errno != os.errno.ENOENT:
                 raise
@@ -753,9 +755,8 @@ class MediaFile:
     """----------------------------------------------------------------------------------
     Recursively remove folders
     ----------------------------------------------------------------------------------"""
-    def remove_folder(folder):
-        print folder != media_path
-        if not find_media_files(folder) and folder != media_path:
+    def remove_folder(self,folder):
+        if not find_media_files(folder) and folder != media_path and os.path.dirname(self.input_video) != self.target_dir:
             try:
                 shutil.rmtree(folder,True)
                 Logger.info("Folder {folder} succesfully removed".format(folder=folder))
