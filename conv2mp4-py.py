@@ -453,15 +453,18 @@ class MediaFile:
         if MOVE_FILES:
             self.move_external_subs()
         self.create_hard_link()
-        try:
-            self.handbrake_convert()
-        except KeyboardInterrupt:
-            Logger.info("KeyBoardInterrupt Detected, Cleaning up and Exiting")
-            self.remove_media_file(self.output_video)
-            sys.exit(0)
-        if REMOVE_CONVERTED:
-            self.remove_media_file(self.input_video)
-            self.remove_folder(os.path.dirname(self.input_video))
+        if self.input_video != self.output_video:
+            try:
+                self.handbrake_convert()
+            except KeyboardInterrupt:
+                Logger.info("KeyBoardInterrupt Detected, Cleaning up and Exiting")
+                self.remove_media_file(self.output_video)
+                sys.exit(0)
+            if REMOVE_CONVERTED:
+                self.remove_media_file(self.input_video)
+                self.remove_folder(os.path.dirname(self.input_video))
+        else:
+            logger.info("{file} already exists, skipping.".format(file=self.input_video))
 
     """----------------------------------------------------------------------------------
     Create hard links from english to foreign directories
