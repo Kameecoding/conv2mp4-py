@@ -208,6 +208,7 @@ def rename_files(media_path):
                 shutil.move(rename_output,output_file)
         except AttributeError:
             Logger.warning("Unable to match output file name for {filename}".format(filename=file))
+            continue
         Logger.info("{filename} renamed".format(filename=file))
 
 def is_tvshow(filename):
