@@ -771,7 +771,7 @@ class MediaFile:
             try:
                 shutil.rmtree(folder,True)
                 Logger.info("Folder {folder} succesfully removed".format(folder=folder))
-                remove_folder(os.path.dirname(folder))
+                self.remove_folder(os.path.dirname(folder))
             except OSError as reason:
                 Logger.info(reason)
 
