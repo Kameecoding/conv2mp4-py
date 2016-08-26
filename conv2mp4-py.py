@@ -585,7 +585,7 @@ class MediaFile:
                     else:
                         Logger.info('Failed to match season pattern in {new}'.format(new=self.input_video))
                         sys.exit(0)
-                sub_folder = os.path.join(sub_folder,'Season' + season) 
+                sub_folder = os.path.join(sub_folder,'Season ' + season) 
         elif (CREATE_MOVIE_DIRS and not self.is_show):
             sub_folder=os.path.basename(self.input_video)[:-4]
         if 'sub_folder' in locals():
