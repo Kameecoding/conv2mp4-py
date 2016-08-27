@@ -473,7 +473,7 @@ class MediaFile:
                 self.remove_media_file(self.input_video)
                 self.remove_folder(os.path.dirname(self.input_video))
         else:
-            logger.info("{file} already exists, skipping.".format(file=self.input_video))
+            Logger.info("{file} already exists, skipping.".format(file=self.input_video))
 
     """----------------------------------------------------------------------------------
     Create hard links from english to foreign directories
