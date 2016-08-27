@@ -110,7 +110,7 @@ TVSHOW_TARGET = '' #Example F:\Media\TV Shows'
 LANG_TVSHOW_TARGET = '' #Example "F:\Media\Sorozatok"
 
 #Pattern Constants - DO NOT EDIT THESE
-TV_SHOW_PATTERNS = [".s([0-9]+).",".([0-9]+)x[0-9][0-9].",".s([0-9]+)e([0-9]+)."]
+TV_SHOW_PATTERNS = [".(\\tv shows\\).",".([0-9]+)x[0-9][0-9].",".s([0-9]+)e([0-9]+)."]
 SUB_PATTERN = 'Stream #[0-9]:([0-9])\(([a-z]{3})\): Subtitle: [a-z]{3,7}[ ]*[\(]*([a-z]*)[\) \(]*([a-z]*)[\)\W]*Metadata:[\W]*title[ ]*: ([a-z]*)'
 SUB_PATTERN2 = 'Stream #[0-9]:([0-9])\(([a-z]{3})\): Subtitle: [a-z]{3,7}[ ]*[\(]*([a-z]*)[\) \(]*([a-z]*)[\)\W]*'
 AUDIO_PATTERN = 'Stream #[0-9]:[0-9]\(([a-z]{3})\):[\W]*Audio'
@@ -570,7 +570,7 @@ class MediaFile:
         if (CREATE_TVSHOW_DIRS and self.is_show):
             sub_folder=os.path.basename(self.input_video)[:os.path.basename(self.input_video).find('-')-1]
             if CREATE_SEASON_DIRS: 
-                match = re.search(TV_SHOW_PATTERNS[0],self.input_video,re.I)
+                match = re.search(TV_SHOW_PATTERNS[1],self.input_video,re.I)
                 if match:
                     season = match.group(1)
                 else:
