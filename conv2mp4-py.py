@@ -213,6 +213,9 @@ def rename_files(media_path):
                 output_file += forced + '.'
             output_file += output_file_extention
             if rename_output != output_file:
+                dir = os.path.dirname(file)
+                rename_output = os.path.join(dir,rename_output)
+                output_file = os.path.join(dir,output_file)
                 shutil.move(rename_output,output_file)
         except AttributeError:
             Logger.warning("Unable to match output file name for {filename}".format(filename=file))
