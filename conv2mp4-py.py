@@ -501,7 +501,7 @@ class MediaFile:
                 self.input_video = file
                 break
         if not self.input_video:
-            logging.error("Unable to find video files, exiting")
+            logging.error("Unable to find video files, exiting, files : {files}".format(files=self.files))
             sys.exit(1)
         self.files.remove(self.input_video)
 
