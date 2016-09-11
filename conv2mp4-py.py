@@ -110,7 +110,7 @@ TVSHOW_TARGET = '' #Example F:\Media\TV Shows'
 LANG_TVSHOW_TARGET = '' #Example "F:\Media\Sorozatok"
 
 #Pattern Constants - DO NOT EDIT THESE
-TV_SHOW_PATTERNS = [".(\\tv shows\\).",".([0-9]+)x[0-9][0-9].",".s([0-9]+)e([0-9]+)."]
+TV_SHOW_PATTERNS = [".(tv[ ]{0,1}shows).",".([0-9]+)x[0-9][0-9].",".s([0-9]+)e([0-9]+).",".s([0-9]+)[\.]{0,1}([0-9]+)."]
 SUB_PATTERN = 'Stream #[0-9]:([0-9])\(([a-z]{3})\): Subtitle: [a-z]{3,7}[ ]*[\(]*([a-z]*)[\) \(]*([a-z]*)[\)\W]*Metadata:[\W]*title[ ]*: ([a-z]*)'
 SUB_PATTERN2 = 'Stream #[0-9]:([0-9])\(([a-z]{3})\): Subtitle: [a-z]{3,7}[ ]*[\(]*([a-z]*)[\) \(]*([a-z]*)[\)\W]*'
 AUDIO_PATTERN = 'Stream #[0-9]:[0-9]\(([a-z]{3})\):[\W]*Audio'
@@ -573,22 +573,19 @@ class MediaFile:
         if (CREATE_TVSHOW_DIRS and self.is_show):
             sub_folder=os.path.basename(self.input_video)[:os.path.basename(self.input_video).find('-')-1]
             if CREATE_SEASON_DIRS: 
-                match = re.search(TV_SHOW_PATTERNS[1],self.input_video,re.I)
+                match = re.search(TV_SHOW_PATTERNS[2],self.input_video,re.I)
                 if match:
                     season = match.group(1)
-                else:
-                    match = re.search(TV_SHOW_PATTERNS[2],self.input_video,re.I)
-                    if match:
-                        season = match.group(1)
-                    if 'season' in locals():
-                        if len(season) == 1:
-                            season = ' 0' + season
-                        else:
-                            season = ' ' + season
+                    print "Season " + season
+                if 'season' in locals():
+                    if len(season) == 1:
+                        season = ' 0' + season
                     else:
-                        Logger.info('Failed to match season pattern in {new}'.format(new=self.input_video))
-                        sys.exit(0)
-                sub_folder = os.path.join(sub_folder,'Season ' + season) 
+                        season = ' ' + season
+                else:
+                    Logger.info('Failed to match season pattern in {new}'.format(new=self.input_video))
+                    sys.exit(0)
+                sub_folder = os.path.join(sub_folder,'Season' + season)
         elif (CREATE_MOVIE_DIRS and not self.is_show):
             sub_folder=os.path.basename(self.input_video)[:-4]
         if 'sub_folder' in locals():
