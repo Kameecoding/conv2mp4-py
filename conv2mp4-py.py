@@ -209,13 +209,15 @@ def rename_files(media_path):
 
             if 'suffix' in locals() and is_good_suffix:
                 output_file += suffix + '.'
+                del suffix
             if 'forced' in locals():
                 output_file += forced + '.'
+                del forced
             output_file += output_file_extention
             if rename_output != output_file:
-                dir = os.path.dirname(file)
-                rename_output = os.path.join(dir,rename_output)
-                output_file = os.path.join(dir,output_file)
+                dirn = os.path.dirname(file)
+                rename_output = os.path.join(dirn,rename_output)
+                output_file = os.path.join(dirn,output_file)
                 shutil.move(rename_output,output_file)
         except AttributeError:
             Logger.warning("Unable to match output file name for {filename}".format(filename=file))
