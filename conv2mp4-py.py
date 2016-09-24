@@ -481,14 +481,14 @@ class MediaFile:
     def create_hard_link(self):
         if self.hard_link:
             if not os.path.isdir(self.hard_link):
-                Logger.info("Hardlinking {source} and {target}".format(source=self.target_dir,target=self.target_dir))
+                Logger.info("Hardlinking {source} and {target}".format(source=self.target_dir,target=self.hard_link))
                 check_path(os.path.dirname(self.hard_link))
                 if IS_WINDOWS:
                     ntfsutils.junction.create(self.target_dir,self.hard_link)
                 else:
                     os.link(self.target_dir,self.hard_link)
             else:
-                Logger.warning("Can't hardlink {source} and {target}, {target} already exists".format(source=self.target_dir,target=self.target_dir))
+                Logger.warning("Can't hardlink {source} and {target}, {target} already exists".format(source=self.target_dir,target=self.hard_link))
             
 
     """----------------------------------------------------------------------------------
