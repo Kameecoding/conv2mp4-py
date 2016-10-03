@@ -61,6 +61,7 @@ import logging
 import re
 import shutil
 import ntfsutils.junction
+import itertools
 
 """----------------------------------------------------------------------------------
     Global Constants controlling the script
@@ -198,6 +199,10 @@ def rename_files(media_path):
         
         if output.find('already exists') != -1:
             Logger.warning("{filename} wasn't renamed because a file with same name already exists".format(filename=file))
+            if 'suffix' in locals():
+                del suffix
+            if 'forced' in locals():
+                del forced
             continue
         
         try:
@@ -508,15 +513,17 @@ class MediaFile:
         self.files.remove(self.input_video)
 
         self.external_subtitles = []
+
+      
         for file in self.files:
             match = os.path.commonprefix([self.input_video,file])
             if len(match) == len(self.input_video[:-3]):
                 self.external_subtitles.append(file)
                 self.files.remove(file)
         
+        
         for file in self.files:
             compare = [os.path.basename(self.input_video),os.path.basename(file)]
-            
             if os.path.commonprefix(compare) == os.path.basename(self.input_video[:-3]):
                 if is_subtitle(file):
                     self.external_subtitles.append(file)
@@ -578,7 +585,6 @@ class MediaFile:
                 match = re.search(TV_SHOW_PATTERNS[2],self.input_video,re.I)
                 if match:
                     season = match.group(1)
-                    print "Season " + season
                 if 'season' in locals():
                     if len(season) == 1:
                         season = ' 0' + season
@@ -592,6 +598,7 @@ class MediaFile:
             sub_folder=os.path.basename(self.input_video)[:-4]
         if 'sub_folder' in locals():
             self.target_dir = os.path.join(self.target_dir,sub_folder)
+            self.hard_link = os.path.join(self.hard_link,sub_folder)
 
     """----------------------------------------------------------------------------------
     Convert files found to mp4 using HandBrakeCLI
