@@ -80,6 +80,7 @@ MOVE_FILES = True
 EXTRACT_SRT = True
 REMOVE_CONVERTED = True
 HARD_LINK  = True
+RENAME_FILES = True
 DEV_NULL = open(os.devnull,'w')
 
 
@@ -95,7 +96,7 @@ ENABLE_PLEX_UPDATE = True
 PLEX_IP = '' #Typically '127.0.0.1:32400'
 PLEX_TOKEN = '' # See https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token 
 # Max media files to convert
-MAX_CONVERT_ITEMS = 200
+MAX_CONVERT_ITEMS = 90000
 LOCALE = '' #Three digit code for your language for example for Hungarian it's 'hun'
 
 # Paths to FFMPEG, HANDBRAKE-cli and your log file
@@ -105,10 +106,10 @@ FFMPEG = 'C:\\FFMPEG\\bin\\FFMPEG.exe' #'/usr/bin/FFMPEG'
 HANDBRAKE = "C:\Program Files\HandBrake\HandBrakeCLI.exe" #'/usr/bin/HandBrakeCLI'
 FILEBOT = 'C:\Program Files\FileBot\\FILEBOT.exe'
 
-MOVIE_TARGET = '' #Example: "F:\Media\Movies"
-LANG_MOVIE_TARGET = '' # Example: "F:\Media\Filmek"
-TVSHOW_TARGET = '' #Example F:\Media\TV Shows'
-LANG_TVSHOW_TARGET = '' #Example "F:\Media\Sorozatok"
+MOVIE_TARGET = '' #Example: F:\Media\Movies
+LANG_MOVIE_TARGET = '' # Example: F:\Media\Filmek
+TVSHOW_TARGET = '' #Example F:\Media\TV Shows
+LANG_TVSHOW_TARGET = '' #Example F:\Media\Sorozatok
 
 #Pattern Constants - DO NOT EDIT THESE
 TV_SHOW_PATTERNS = [".(tv[ ]{0,1}shows).",".([0-9]+)x[0-9][0-9].",".s([0-9]+)e([0-9]+).",".s([0-9]+)[\.]{0,1}([0-9]+)."]
@@ -171,16 +172,17 @@ def rename_files(media_path):
             the_db = 'TheTVDB'
             form = '{n} - {s00e00} - {t}'
         
-        suffix_match = re.search('\.([a-z]{3})\.',os.path.basename(file),re.I)
+        suffix_match = re.findall('\.([a-z]{3})\.',os.path.basename(file),re.I)
         forced_match = re.search('.(forced).',file,re.I)
         if suffix_match:
-            suffix = suffix_match.group(1)
+            suffix = suffix_match[len(suffix_match)-1]
             is_good_suffix = False
             if suffix in COUNTRY_TUPLE.values():
                 is_good_suffix = True
 
         if forced_match:
             forced = forced_match.group(1)
+       
         try:
             #rename the files       
             proc = subprocess.Popen([
@@ -405,7 +407,8 @@ def main(argv):
 
     
     #Rename Files Using Filebot
-    rename_files(media_path)
+    if RENAME_FILES:
+        rename_files(media_path)
         
     #Find Media files to convert
     MediaFile.files = find_media_files(media_path)
@@ -489,6 +492,7 @@ class MediaFile:
         if self.hard_link:
             if not os.path.isdir(self.hard_link):
                 Logger.info("Hardlinking {source} and {target}".format(source=self.target_dir,target=self.hard_link))
+                print self.input_video  
                 check_path(os.path.dirname(self.hard_link))
                 if IS_WINDOWS:
                     ntfsutils.junction.create(self.target_dir,self.hard_link)
@@ -496,6 +500,7 @@ class MediaFile:
                     os.link(self.target_dir,self.hard_link)
             else:
                 Logger.warning("Can't hardlink {source} and {target}, {target} already exists".format(source=self.target_dir,target=self.hard_link))
+                          
             
 
     """----------------------------------------------------------------------------------
@@ -514,20 +519,27 @@ class MediaFile:
 
         self.external_subtitles = []
 
-      
+        to_remove = []      
         for file in self.files:
             match = os.path.commonprefix([self.input_video,file])
             if len(match) == len(self.input_video[:-3]):
                 self.external_subtitles.append(file)
-                self.files.remove(file)
-        
-        
+                to_remove.append(file)
+
+        for srt in to_remove:
+            self.files.remove(srt)   
+        to_remove = []
+
         for file in self.files:
             compare = [os.path.basename(self.input_video),os.path.basename(file)]
-            if os.path.commonprefix(compare) == os.path.basename(self.input_video[:-3]):
+            if os.path.commonprefix(compare) == os.path.basename(self.input_video[:-4]):
                 if is_subtitle(file):
                     self.external_subtitles.append(file)
-                    self.files.remove(file)
+                    to_remove.append(file)
+        
+        for srt in to_remove:
+            self.files.remove(srt)
+
         
     """----------------------------------------------------------------------------------
     Add target directory and hardlink if enabled
@@ -544,7 +556,7 @@ class MediaFile:
                 #if we want to create hard links and there is both english and locale audio stream in the file or in the name
                 if HARD_LINK and ((LOCALE in audiostreams and 'eng' in audiostreams) or (re.search('.{}.'.format(LOCALE),self.input_video,re.I) and re.search('.eng.',self.input_video,re.I))):
                     self.target_dir = TVSHOW_TARGET if self.is_show else MOVIE_TARGET
-                    self.hard_link = LANG_TVSHOW_TARGET if self.is_show else LANG_MOVIE_TARGET                 
+                    self.hard_link = LANG_TVSHOW_TARGET if self.is_show else LANG_MOVIE_TARGET          
                 else:
                     #If the the input is matches LOCALE put it in the lang folders
                     if re.search(LANG_PATTERN,self.input_video,re.I | re.M):
@@ -598,7 +610,8 @@ class MediaFile:
             sub_folder=os.path.basename(self.input_video)[:-4]
         if 'sub_folder' in locals():
             self.target_dir = os.path.join(self.target_dir,sub_folder)
-            self.hard_link = os.path.join(self.hard_link,sub_folder)
+            if self.hard_link:
+                self.hard_link = os.path.join(self.hard_link,sub_folder)
 
     """----------------------------------------------------------------------------------
     Convert files found to mp4 using HandBrakeCLI
