@@ -82,10 +82,11 @@ REMOVE_CONVERTED = True
 HARD_LINK  = True
 RENAME_FILES = True
 DEV_NULL = open(os.devnull,'w')
+MEDIA_PATH = ""
 
 
 # File types to convert
-videos = ('.mkv', '.avi', '.flv', '.mpeg', '.mp4')
+videos = ('.mkv', '.avi', '.flv', '.mpeg', '.mp4','m4v')
 subtitles = ('.srt','.ass')
 
 
@@ -398,20 +399,21 @@ def main(argv):
         print "Usage: {} [directory ...]".format(binary)
         sys.exit(0)
 
-    global media_path
-    media_path = argv[1]
+    global MEDIA_PATHh
+    MEDIA_PATHh = argv[1]
 
-    if not os.path.exists(media_path):
-        Logger.error("Unable to find directory: {path}".format(path=media_path))
+    if not os.path.exists(MEDIA_PATHh):
+        Logger.error("Unable to find directory: {path}".format(path=MEDIA_PATHh))
+        Logger.info("You can enter a valid media path in the script header or you can pass it in as an argument")
         sys.exit(0)
 
     
     #Rename Files Using Filebot
     if RENAME_FILES:
-        rename_files(media_path)
+        rename_files(MEDIA_PATHh)
         
     #Find Media files to convert
-    MediaFile.files = find_media_files(media_path)
+    MediaFile.files = find_media_files(MEDIA_PATHh)
     media_files = []
     #Create file objects
     while MediaFile.files:
@@ -626,6 +628,8 @@ class MediaFile:
             '-o', self.output_video,
             '-e', 'x264',
             '-q', '20.0',
+            '-X', '1280',
+            '-Y', '720',
             '-a','1,2,3,4,5,6',
             '-E','faac,copy:aac',
             '-B', '160,160',
