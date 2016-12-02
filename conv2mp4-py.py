@@ -628,8 +628,6 @@ class MediaFile:
             '-o', self.output_video,
             '-e', 'x264',
             '-q', '20.0',
-            '-X', '1280',
-            '-Y', '720',
             '-a','1,2,3,4,5,6',
             '-E','faac,copy:aac',
             '-B', '160,160',
