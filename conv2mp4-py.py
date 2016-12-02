@@ -394,26 +394,21 @@ def good_output(oldFile,new_file):
 """ Main Application """
 def main(argv):
 
-    if len(argv) == 1:
-        path, binary = os.path.split(argv[0])
-        print "Usage: {} [directory ...]".format(binary)
-        sys.exit(0)
+    global MEDIA_PATH
+    MEDIA_PATH = argv[1]
 
-    global MEDIA_PATHh
-    MEDIA_PATHh = argv[1]
-
-    if not os.path.exists(MEDIA_PATHh):
-        Logger.error("Unable to find directory: {path}".format(path=MEDIA_PATHh))
+    if not os.path.exists(MEDIA_PATH):
+        Logger.error("Unable to find directory: {path}".format(path=MEDIA_PATH))
         Logger.info("You can enter a valid media path in the script header or you can pass it in as an argument")
         sys.exit(0)
 
     
     #Rename Files Using Filebot
     if RENAME_FILES:
-        rename_files(MEDIA_PATHh)
+        rename_files(MEDIA_PATH)
         
     #Find Media files to convert
-    MediaFile.files = find_media_files(MEDIA_PATHh)
+    MediaFile.files = find_media_files(MEDIA_PATH)
     media_files = []
     #Create file objects
     while MediaFile.files:
