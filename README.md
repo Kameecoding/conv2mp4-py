@@ -16,7 +16,7 @@ There are several user-defined variables you will need to edit using notepad or 
 <b>FFMPEG</b> = path to ffmpeg.exe<br>
 <b>HANDBRAKE</b> = path to HandBrakeCLI.exe <br>
 <b>FILEBOT</b> = path to FileBot.exe <br>
-
+<b>MEDIA_PATH</b> = Path to your uncoverted media <br>
 
 <b>ENABLE_PLEX_UPDATE</b> Set to True to enable the script to update your server<br>
 <i>NOTE: Requires PLEX_IP and PLEX_TOKEN to work.</i><br>
