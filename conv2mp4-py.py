@@ -786,7 +786,7 @@ class MediaFile:
     Recursively remove folders
     ----------------------------------------------------------------------------------"""
     def remove_folder(self,folder):
-        if not find_media_files(folder) and folder != media_path and os.path.dirname(self.input_video) != self.target_dir:
+        if not find_media_files(folder) and folder != MEDIA_PATH and os.path.dirname(self.input_video) != self.target_dir:
             try:
                 shutil.rmtree(folder,True)
                 Logger.info("Folder {folder} succesfully removed".format(folder=folder))
