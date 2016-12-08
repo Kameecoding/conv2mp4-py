@@ -395,7 +395,9 @@ def good_output(oldFile,new_file):
 def main(argv):
 
     global MEDIA_PATH
-    MEDIA_PATH = argv[1]
+
+    if len(argv) == 2:
+        MEDIA_PATH = argv[1]
 
     if not os.path.exists(MEDIA_PATH):
         Logger.error("Unable to find directory: {path}".format(path=MEDIA_PATH))
