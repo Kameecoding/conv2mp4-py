@@ -1,3 +1,10 @@
+#DEPRECATED
+
+THIS PROJECT IS NO LONGER BEING MAINTAINED OR UPDATED WITH FRESH COMMITS:
+
+Work is dedicated to it's successor: plexarizer
+
+
 # conv2mp4-py
 Python 2.7 script that recursively searches through a defined file path and converts MKV, AVI, FLV, and MPEG files to MP4 using handbrake (with AAC audio). It then refreshes a Plex library, and deletes the source file upon success and moves the new files into the defines directory (Plex Library directories for example). Fails over to ffmpeg encode if conversion failure is detected. The purpose of this script is to reduce the number of transcodes performed by a Plex server, by processing all files into an MP4 format.<br><br>
 <b><u>Dependencies</u></b><br>
