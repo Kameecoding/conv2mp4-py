@@ -41,14 +41,6 @@ There are several user-defined variables you will need to edit using notepad or 
 <b>LANG_TVSHOW_TARGET</b> = Path where you want your foreign langue Tv Shows<br>
 
 <b>FOREIGN</b> = Set to true if you want the script to take foreign language into account<br>
-<b>PREFER_METADATA</b> = The Script tries to match the description and the metadata of the subtitles in the file, you can try turning it on and off to see if the subtitles were matched better<br>
 <b>EXTRACT_SRT</b> = Whether to extract the subtitles from files into external SRTs (External SRT files don't trigger transcoding, while embedded might)<br>
 
-<b>MOVE_FILES</b> = Whether to allow to move the files to new directories or keep them in the same<br>
-<b>CREATE_MOVIE_DIRS</b> = Whether to create a directory for each movie file: e.g. it will put the movie Pacific Rim and all it's subtitles to the folder [MOVIE_TARGET or LANG_MOVIE_TARGET]\Pacific Rim (2013)\ <br>
-<b>CREATE_TVSHOW_DIRS</b> = Whether to create a directory for each TV Show: e.g. it will put the tv show Modern Family and all it's episodes and subtitles to the folder [TVSHOW_TARGET or LANG_TVSHOW_TARGET]\Modern Family\ <br>
-<b>CREATE_SEASON_DIRS</b> = Used together with CREATE_TVSHOW_DIRS, also adds a Season folder. e.g. first Season of Modern Family will get put into: [TVSHOW_TARGET or LANG_TVSHOW_TARGET]\Modern Family\Season 01\ <br>
-<i>NOTE: Only Works with CREATE_TVSHOW_DIRS set to True</i><br>
 <b>REMOVE_OLD</b> = Whether to remove the files that have been already converted and are no longer needed<br>
-<b>HARD_LINK</b> = Whether to create hardlink between folders, for example if you have a movie with both English and Foreign audio and you want plex to detect it in both the English and Foreign Library the easiest way is to Hard link the directories<br>
-<i>NOTE: Only Works with FOREIGN and MOVE_FILES set to True</i><br>
