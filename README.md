@@ -2,7 +2,6 @@
 
 THIS PROJECT IS NO LONGER BEING MAINTAINED OR UPDATED WITH FRESH COMMITS:
 
-Work is dedicated to it's successor: plexarizer
 
 
 # conv2mp4-py
